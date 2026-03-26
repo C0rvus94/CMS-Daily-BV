@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daily Bible Verse</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+    #verse-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 600px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="verse-box">
+  <h1>Daily Bible Verse</h1>
+  <div id="verse">Loading...</div>
+</div>
+
+<script>
+  fetch("https://beta.ourmanna.com/api/v1/get/?format=json&order=daily")
+    .then(res => res.json())
+    .then(data => {
+      const verse = data.verse.details.text;
+      const reference = data.verse.details.reference;
+
+      document.getElementById("verse").innerHTML = `
+        <h2>${reference}</h2>
+        <p>${verse}</p>
+      `;
+    })
+    .catch(() => {
+      document.getElementById("verse").innerHTML = "Error loading verse.";
+    });
+</script>
+
+</body>
+</html>
